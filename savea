@@ -1,0 +1,43 @@
+#!/bin/bash
+while :; do
+echo -en "\e[32m$(whoami)~$(date | awk '{print $4}') \e[2mcrear/listar/ver/borrar/clear/salir\e[0m "
+read lc
+
+if [[ $lc == "crear" ]]
+then
+echo -en "\e[0mNombre de la lista de cuentas \e[32mN\e[2mombre\e[0m "; read nc
+echo -en "\e[0mCorreo \e[32mC\e[2morreo\e[0m "; read co
+echo -en "\e[0mContraseña \e[32mC\e[2montraseña\e[0m "; read con
+echo -e "\e[32mSave $nc \e[0m... "; sleep 1
+echo -e "\e[32mSave $co \e[0m... "; sleep 1
+echo -e "\e[32mSave $con \e[0m... "; sleep 1
+echo -e "\e[0mSe ah guardado en \e[32m$nc.dump\e[0m "
+
+echo -e "
+========[DaTe]==========
+Fecha: $(date +%d/%m/%Y)
+Correo: $co
+Contraseña: $con 
+Nombre: $nc
+========================
+" >> $nc.dump 
+
+elif [[ $lc == "listar" ]]
+then
+ls *.dump 
+elif [[ $lc == "ver" ]]
+then
+cat *.dump 
+elif [[ $lc == "borrar" ]]
+then
+rm *.dump
+elif [[ $lc == "clear" ]]
+then
+clear
+elif [[ $lc == "salir" ]]
+then
+exit
+else
+echo -en ""
+fi
+done
