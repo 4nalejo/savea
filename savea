@@ -20,17 +20,17 @@ Correo: $co
 Contraseña: $con 
 Nombre: $nc
 ========================
-" >> $nc.dump 
+" >> .dumps/$nc.dump 
 
 elif [[ $lc == "listar" ]]
 then
-ls *.dump 
+ls .dumps/*.dump 
 elif [[ $lc == "ver" ]]
 then
-cat *.dump 
+cat .dumps/*.dump 
 elif [[ $lc == "borrar" ]]
 then
-rm *.dump
+rm .dumps/*.dump
 elif [[ $lc == "clear" ]]
 then
 clear
