@@ -1,43 +1,80 @@
 #!/bin/bash
-while :; do
-echo -en "\e[32m$(whoami)~$(date | awk '{print $4}') \e[2mcrear/listar/ver/borrar/clear/salir\e[0m "
-read lc
+trap ctrl_c INT
+ctrl_c(){ echo -en "\e[32merror\e[0m"; }
 
-if [[ $lc == "crear" ]]
+banner(){
+clear
+echo -e "
+\e[32m.▄▄ ·  ▄▄▄·  ▌ ▐·▄▄▄ . ▄▄▄· 
+▐█ ▀. ▐█ ▀█ ▪█·█▌▀▄.▀·▐█ ▀█ 
+▄▀▀▀█▄▄█▀▀█ ▐█▐█•▐▀▀▪▄▄█▀▀█ 
+▐█▄▪▐█▐█ ▪▐▌ ███ ▐█▄▄▌▐█ ▪▐▌
+ ▀▀▀▀  ▀  ▀ . ▀   ▀▀▀  ▀  ▀\e[0m "
+}
+banner
+savea(){
+while :;
+do
+echo -en "\e[32m$(whoami)~$(date | awk '{print $4}')\e[0m $ "; read lc
+c=$(echo "$lc" | awk '{print $1}')
+i=$(echo "$lc" | awk '{print $2}')
+if [[ $c == "help" ]]
 then
-echo -en "\e[0mNombre de la lista de cuentas \e[32mN\e[2mombre\e[0m "; read nc
-echo -en "\e[0mCorreo \e[32mC\e[2morreo\e[0m "; read co
-echo -en "\e[0mContraseña \e[32mC\e[2montraseña\e[0m "; read con
+for i in $(seq 1 80); do echo -en "\e[32m=\e[0m" ; done ; echo -e ""
+echo
+echo "COMMANDS             DESCRIPTION                  USE"
+echo "created           create account list             none       "
+echo "tolist            list account                    none"
+echo "view              view account list               none"
+echo "remove            remove account list             none"
+echo "banner            Show the banner                 none"
+echo "clear             Clean the screen                none"
+echo "exit              Get out of shodan               none"
+echo
+for i in $(seq 1 80); do echo -en "\e[32m=\e[0m" ; done ; echo -e ""
+elif [[ $c == "created" ]]
+then
+echo -en "\e[0mAccount list name \e[32mN\e[2mame\e[0m "; read nc
+echo -en "\e[0mMail \e[32mM\e[2mail\e[0m "; read co
+echo -en "\e[0mPassword \e[32mP\e[2massword\e[0m "; read con
 echo -e "\e[32mSave $nc \e[0m... "; sleep 1
 echo -e "\e[32mSave $co \e[0m... "; sleep 1
 echo -e "\e[32mSave $con \e[0m... "; sleep 1
-echo -e "\e[0mSe ah guardado en \e[32m$nc.dump\e[0m "
+echo -e "\e[0mHas been saved in \e[32m$nc.dump\e[0m "
 
 echo -e "
 ========[DaTe]==========
-Fecha: $(date +%d/%m/%Y)
-Correo: $co
-Contraseña: $con 
-Nombre: $nc
+Date: $(date +%d/%m/%Y)
+Mail: $co
+Password: $con 
+name: $nc
 ========================
 " >> .dumps/$nc.dump 
 
-elif [[ $lc == "listar" ]]
+elif [[ $c == "tolist" ]]
 then
-ls .dumps/*.dump 
-elif [[ $lc == "ver" ]]
+cd .dumps
+ls 
+cd ..
+elif [[ $c == "view" ]]
 then
 cat .dumps/*.dump 
-elif [[ $lc == "borrar" ]]
+elif [[ $c == "remove" ]]
 then
 rm .dumps/*.dump
-elif [[ $lc == "clear" ]]
+elif [[ $c == "banner" ]]
+then
+banner
+elif [[ $c == "clear" ]]
 then
 clear
-elif [[ $lc == "salir" ]]
+elif [[ $c == "exit" ]]
 then
 exit
 else
-echo -en ""
+echo -e "help to see the help menu."
 fi
 done
+}
+
+savea
